@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صدقة جارية 🤍</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Tahoma;
+    background:linear-gradient(#0f2027,#203a43,#2c5364);
+    color:white;
+    text-align:center;
+    direction:rtl;
+}
+
+.container{
+    padding:20px;
+}
+
+img{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    margin-top:20px;
+    border:3px solid white;
+}
+
+.card{
+    background:rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:15px;
+    margin:20px;
+}
+
+button{
+    padding:12px;
+    margin:8px;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    cursor:pointer;
+    background:white;
+    color:#2c5364;
+    font-weight:bold;
+}
+
+.counter{
+    font-size:25px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="hasa1.jpeg">
+
+<h1>🤍/ اسم المتوفي حسن عباس حسن🤍</h1>
+
+<div class="card">
+اللهم اغفر له وارحمه، وعافه واعف عنه، وأكرم نزله، ووسع مدخله،
+واغسله بالماء والثلج والبرد، ونقه من الذنوب كما ينقى الثوب الأبيض من الدنس،
+اللهم اجعل قبره روضة من رياض الجنة 🤲
+</div>
+
+<h2>🌙 دعاء اليوم</h2>
+<div class="card" id="dailyDua"></div>
+
+<h2>🕌 أذكار</h2>
+<div class="card" id="zekrBox">جاري التحميل...</div>
+
+<h2>ادعيله 🤲</h2>
+<button onclick="showDua(1)">اللهم ارحمه</button>
+<button onclick="showDua(2)">اللهم اغفر له</button>
+<button onclick="showDua(3)">اللهم وسع قبره</button>
+<button onclick="showDua(4)">اللهم اجعله من أهل الجنة</button>
+
+<div id="dua"></div>
+
+<hr>
+
+<h2>📿 التسبيح</h2>
+<div class="counter" id="count">0</div>
+<button onclick="tasbeeh()">سبحان الله</button>
+<button onclick="reset()">تصفير</button>
+
+<hr>
+
+<h2>👁️ عدد الزوار</h2>
+<div class="counter" id="visits">...</div>
+
+<hr>
+
+<h2>🔊 قرآن كريم</h2>
+<audio controls autoplay loop>
+<source src="hasan.mp3" type="audio/mpeg">
+</audio>
+
+<hr>
+
+<button onclick="share()">📱 مشاركة واتساب</button>
+
+</div>
+
+<script>
+
+// دعاء يومي
+let duas = [
+"اللهم ارحمه رحمة واسعة واغفر له 🤍",
+"اللهم اجعل قبره نور وراحة 🤲",
+"اللهم اجعله من أهل الجنة 🤍",
+"اللهم اغفر له جميع ذنوبه 🤲",
+"اللهم آنس وحدته 🤍",
+"اللهم ارزقه الفردوس الأعلى 🤲",
+"اللهم اجعل عمله الصالح شفيعًا له 🤍"
+];
+
+let day = new Date().getDate();
+let todayDua = duas[day % duas.length];
+document.getElementById("dailyDua").innerText = todayDua;
+
+
+// أذكار تلقائية
+let azkar = [
+"سبحان الله 🤍",
+"الحمد لله 🤲",
+"الله أكبر 🕌",
+"لا إله إلا الله 🤍",
+"استغفر الله العظيم 🤲",
+"اللهم صل وسلم على نبينا محمد 🕌",
+"لا حول ولا قوة إلا بالله 🤍"
+];
+
+let index = 0;
+
+function changeZekr(){
+    document.getElementById("zekrBox").innerText = azkar[index];
+    index++;
+    if(index >= azkar.length){
+        index = 0;
+    }
+}
+
+setInterval(changeZekr, 5000);
+changeZekr();
+
+
+// أزرار الدعاء
+function showDua(num){
+    let text = "";
+
+    if(num == 1) text = "اللهم ارحمه 🤍";
+    if(num == 2) text = "اللهم اغفر له 🤲";
+    if(num == 3) text = "اللهم وسع قبره 🤍";
+    if(num == 4) text = "اللهم اجعله في الجنة 🤲";
+
+    document.getElementById("dua").innerText = text;
+}
+
+
+// التسبيح
+let count = localStorage.getItem("tasbeeh") || 0;
+document.getElementById("count").innerText = count;
+
+function tasbeeh(){
+    count++;
+    localStorage.setItem("tasbeeh", count);
+    document.getElementById("count").innerText = count;
+}
+
+function reset(){
+    count = 0;
+    localStorage.setItem("tasbeeh", count);
+    document.getElementById("count").innerText = count;
+}
+
+
+// 🔥 عداد زوار حقيقي (باسمك)
+fetch('https://api.countapi.xyz/hit/abdo-mostafa-2026-dua/visits')
+.then(res => res.json())
+.then(res => {
+    document.getElementById("visits").innerText = res.value;
+});
+
+
+// مشاركة واتساب
+function share(){
+    let text = "ادعوا للمتوفي 🤲 صدقة جارية";
+    window.open("https://wa.me/?text=" + encodeURIComponent(text));
+}
+
+</script>
+
+</body>
+</html>
