@@ -165,14 +165,15 @@ document.getElementById("count").innerText = count;
 }
 
 
-// 🔥 عداد زوار حقيقي (محسّن)
-fetch('https://api.countapi.xyz/hit/abdo-mostafa-2026-dua/visits')
+// 🔥 عداد زوار ثابت
+fetch('https://api.countapi.xyz/create?namespace=abdo-mostafa-2026-dua&key=visits&value=0')
+.then(() => fetch('https://api.countapi.xyz/hit/abdo-mostafa-2026-dua/visits'))
 .then(res => res.json())
 .then(res => {
-document.getElementById("visits").innerText = res.value;
+    document.getElementById("visits").innerText = res.value;
 })
-.catch(()=>{
-document.getElementById("visits").innerText = "غير متاح";
+.catch(() => {
+    document.getElementById("visits").innerText = "0";
 });
 
 
