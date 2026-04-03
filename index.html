@@ -165,15 +165,10 @@ document.getElementById("count").innerText = count;
 }
 
 
-// 🔥 عداد زوار حقيقي (حل نهائي)
-fetch('https://api.countapi.xyz/hit/abdo-mostafa-2026-dua/visits')
-.then(res => res.json())
-.then(res => {
-    document.getElementById("visits").innerText = res.value;
-})
-.catch(() => {
-    document.getElementById("visits").innerText = "1";
-});
+<h2>👁️ عدد الزوار</h2>
+<div class="counter">
+<img src="https://hitwebcounter.com/counter/counter.php?page=12345678&style=0006&nbdigits=5&type=page&initCount=0" />
+</div>
 
 
 // مشاركة
