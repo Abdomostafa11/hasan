@@ -15,7 +15,9 @@ body{
     direction:rtl;
 }
 
-.container{padding:20px;}
+.container{
+    padding:20px;
+}
 
 img{
     width:150px;
@@ -44,7 +46,9 @@ button{
     font-weight:bold;
 }
 
-.counter{font-size:25px;}
+.counter{
+    font-size:25px;
+}
 </style>
 
 </head>
@@ -55,7 +59,7 @@ button{
 
 <img src="hasa1.jpeg">
 
-<h1>🤍 المرحوم / حسن عباس حسن 🤍</h1>
+<h1>🤍/ اسم المتوفي حسن عباس حسن🤍</h1>
 
 <div class="card">
 اللهم اغفر له وارحمه، وعافه واعف عنه، وأكرم نزله، ووسع مدخله،
@@ -67,7 +71,7 @@ button{
 <div class="card" id="dailyDua"></div>
 
 <h2>🕌 أذكار</h2>
-<div class="card" id="zekrBox"></div>
+<div class="card" id="zekrBox">جاري التحميل...</div>
 
 <h2>ادعيله 🤲</h2>
 <button onclick="showDua(1)">اللهم ارحمه</button>
@@ -85,10 +89,9 @@ button{
 <button onclick="reset()">تصفير</button>
 
 <hr>
-    <h2>👁️ عدد الزوار</h2>
-<div class="counter">
-<img src="https://hitwebcounter.com/counter/counter.php?page=12345678&style=0006&nbdigits=5&type=page&initCount=0" />
-</div>
+
+<h2>👁️ عدد الزوار</h2>
+<div class="counter" id="visits">...</div>
 
 <hr>
 
@@ -107,45 +110,55 @@ button{
 
 // دعاء يومي
 let duas = [
-"اللهم ارحمه رحمة واسعة 🤍",
-"اللهم اجعل قبره نور 🤲",
-"اللهم اغفر له 🤍",
-"اللهم اجعله في الجنة 🤲",
-"اللهم آنس وحدته 🤍"
+"اللهم ارحمه رحمة واسعة واغفر له 🤍",
+"اللهم اجعل قبره نور وراحة 🤲",
+"اللهم اجعله من أهل الجنة 🤍",
+"اللهم اغفر له جميع ذنوبه 🤲",
+"اللهم آنس وحدته 🤍",
+"اللهم ارزقه الفردوس الأعلى 🤲",
+"اللهم اجعل عمله الصالح شفيعًا له 🤍"
 ];
-document.getElementById("dailyDua").innerText =
-duas[new Date().getDate() % duas.length];
+
+let day = new Date().getDate();
+let todayDua = duas[day % duas.length];
+document.getElementById("dailyDua").innerText = todayDua;
 
 
-// أذكار
+// أذكار تلقائية
 let azkar = [
 "سبحان الله 🤍",
 "الحمد لله 🤲",
 "الله أكبر 🕌",
 "لا إله إلا الله 🤍",
-"استغفر الله العظيم 🤲"
+"استغفر الله العظيم 🤲",
+"اللهم صل وسلم على نبينا محمد 🕌",
+"لا حول ولا قوة إلا بالله 🤍"
 ];
 
-let i = 0;
+let index = 0;
 
 function changeZekr(){
-    document.getElementById("zekrBox").innerText = azkar[i];
-    i = (i + 1) % azkar.length;
+    document.getElementById("zekrBox").innerText = azkar[index];
+    index++;
+    if(index >= azkar.length){
+        index = 0;
+    }
 }
 
-changeZekr(); // يظهر فورًا
-setInterval(changeZekr, 4000);
+setInterval(changeZekr, 5000);
+changeZekr();
 
 
-// الدعاء
+// أزرار الدعاء
 function showDua(num){
-let d=[
-"اللهم ارحمه 🤍",
-"اللهم اغفر له 🤲",
-"اللهم وسع قبره 🤍",
-"اللهم اجعله في الجنة 🤲"
-];
-document.getElementById("dua").innerText = d[num-1];
+    let text = "";
+
+    if(num == 1) text = "اللهم ارحمه 🤍";
+    if(num == 2) text = "اللهم اغفر له 🤲";
+    if(num == 3) text = "اللهم وسع قبره 🤍";
+    if(num == 4) text = "اللهم اجعله في الجنة 🤲";
+
+    document.getElementById("dua").innerText = text;
 }
 
 
@@ -154,21 +167,30 @@ let count = localStorage.getItem("tasbeeh") || 0;
 document.getElementById("count").innerText = count;
 
 function tasbeeh(){
-count++;
-localStorage.setItem("tasbeeh", count);
-document.getElementById("count").innerText = count;
+    count++;
+    localStorage.setItem("tasbeeh", count);
+    document.getElementById("count").innerText = count;
 }
 
 function reset(){
-count = 0;
-localStorage.setItem("tasbeeh", count);
-document.getElementById("count").innerText = count;
+    count = 0;
+    localStorage.setItem("tasbeeh", count);
+    document.getElementById("count").innerText = count;
 }
 
 
-// مشاركة
+// 🔥 عداد زوار حقيقي (باسمك)
+fetch('https://api.countapi.xyz/hit/abdo-mostafa-2026-dua/visits')
+.then(res => res.json())
+.then(res => {
+    document.getElementById("visits").innerText = res.value;
+});
+
+
+// مشاركة واتساب
 function share(){
-window.open("https://wa.me/?text=ادعوا للمتوفي 🤲 صدقة جارية");
+    let text = "ادعوا للمتوفي 🤲 صدقة جارية";
+    window.open("https://wa.me/?text=" + encodeURIComponent(text));
 }
 
 </script>
